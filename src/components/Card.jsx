@@ -18,8 +18,8 @@ export default function Card({
 }) {
   return (
     <article
-      className={`rounded-lg border-l-4 bg-slate-800 p-5 shadow-lg transition-opacity ${coresPlataforma[plataforma]} ${
-        zerado ? "opacity-60" : ""
+      className={`rounded-lg border-l-4 p-5 shadow-lg ${coresPlataforma[plataforma]} ${
+        zerado ? "bg-slate-900 ring-1 ring-slate-700" : "bg-slate-800"
       }`}
     >
       <div className="flex items-center justify-between">
@@ -31,7 +31,13 @@ export default function Card({
         </span>
       </div>
 
-      <h2 className="mt-2 text-xl font-bold text-white">{titulo}</h2>
+      <h2
+        className={`mt-2 text-xl font-bold ${
+          zerado ? "text-slate-400 line-through" : "text-white"
+        }`}
+      >
+        {titulo}
+      </h2>
       <p className="mt-2 text-slate-300">{descricao}</p>
       <p className="mt-3 text-sm text-slate-400">Plataforma: {plataforma}</p>
 
@@ -41,13 +47,14 @@ export default function Card({
             type="checkbox"
             checked={zerado}
             onChange={onToggle}
-            className="h-4 w-4 accent-violet-500"
+            className="h-4 w-4 accent-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:ring-offset-1"
           />
           Zerado
         </label>
         <button
           onClick={onRemover}
-          className="text-xs font-semibold text-red-400 hover:text-red-300"
+          aria-label={`Remover jogo: ${titulo}`}
+          className="rounded px-1 text-xs font-semibold text-red-400 hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-400"
         >
           Remover
         </button>

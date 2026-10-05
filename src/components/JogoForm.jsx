@@ -34,8 +34,9 @@ export default function JogoForm({ onAdicionar }) {
       className="mb-8 flex flex-wrap items-end gap-3 rounded-xl bg-slate-800 p-5 shadow-lg"
     >
       <div className="min-w-[200px] flex-1">
-        <label className="mb-1 block text-sm font-semibold text-slate-300">Título</label>
+        <label htmlFor="campo-titulo" className="mb-1 block text-sm font-semibold text-slate-300">Título</label>
         <input
+          id="campo-titulo"
           type="text"
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
@@ -45,8 +46,9 @@ export default function JogoForm({ onAdicionar }) {
       </div>
 
       <div className="min-w-[200px] flex-1">
-        <label className="mb-1 block text-sm font-semibold text-slate-300">Descrição</label>
+        <label htmlFor="campo-descricao" className="mb-1 block text-sm font-semibold text-slate-300">Descrição</label>
         <input
+          id="campo-descricao"
           type="text"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
@@ -56,8 +58,13 @@ export default function JogoForm({ onAdicionar }) {
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-semibold text-slate-300">Gênero</label>
-        <select value={genero} onChange={(e) => setGenero(e.target.value)} className={campo}>
+        <label htmlFor="campo-genero" className="mb-1 block text-sm font-semibold text-slate-300">Gênero</label>
+        <select
+          id="campo-genero"
+          value={genero}
+          onChange={(e) => setGenero(e.target.value)}
+          className={campo}
+        >
           <option>Ação</option>
           <option>Aventura</option>
           <option>FPS</option>
@@ -68,8 +75,13 @@ export default function JogoForm({ onAdicionar }) {
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-semibold text-slate-300">Plataforma</label>
-        <select value={plataforma} onChange={(e) => setPlataforma(e.target.value)} className={campo}>
+        <label htmlFor="campo-plataforma" className="mb-1 block text-sm font-semibold text-slate-300">Plataforma</label>
+        <select
+          id="campo-plataforma"
+          value={plataforma}
+          onChange={(e) => setPlataforma(e.target.value)}
+          className={campo}
+        >
           <option>PC</option>
           <option>PlayStation</option>
           <option>Xbox</option>
@@ -78,8 +90,9 @@ export default function JogoForm({ onAdicionar }) {
       </div>
 
       <div className="w-24">
-        <label className="mb-1 block text-sm font-semibold text-slate-300">Nota</label>
+        <label htmlFor="campo-nota" className="mb-1 block text-sm font-semibold text-slate-300">Nota</label>
         <input
+          id="campo-nota"
           type="number" min="0" max="10" step="0.1"
           value={nota}
           onChange={(e) => setNota(e.target.value)}
@@ -88,8 +101,9 @@ export default function JogoForm({ onAdicionar }) {
       </div>
 
       <div className="w-28">
-        <label className="mb-1 block text-sm font-semibold text-slate-300">Ano</label>
+        <label htmlFor="campo-ano" className="mb-1 block text-sm font-semibold text-slate-300">Ano</label>
         <input
+          id="campo-ano"
           type="number" min="1970" max="2100"
           value={ano}
           onChange={(e) => setAno(e.target.value)}
@@ -99,7 +113,7 @@ export default function JogoForm({ onAdicionar }) {
 
       <button
         type="submit"
-        className="rounded-lg bg-violet-600 px-5 py-2 font-bold text-white transition-colors hover:bg-violet-700"
+        className="rounded-lg bg-violet-600 px-5 py-2 font-bold text-white transition-colors hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300 focus:ring-offset-2 focus:ring-offset-slate-800"
       >
         + Adicionar
       </button>

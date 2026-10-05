@@ -22,11 +22,8 @@ export default function App() {
     const salvos = localStorage.getItem("gamedex-jogos")
     return salvos ? JSON.parse(salvos) : JOGOS_INICIAIS
   })
-
-  useEffect (() => {
-    localStorage.setItem ("gamedex-jogos", JSON.stringify(jogos))
-  }, [jogos])
   const [filtro, setFiltro] = useState("todos")
+  const [anuncio, setAnuncio] = useState("")
 
   useEffect(() => {
     localStorage.setItem("gamedex-jogos", JSON.stringify(jogos))
@@ -34,16 +31,22 @@ export default function App() {
 
   function adicionarJogo(novoJogo) {
     setJogos((atual) => [...atual, { ...novoJogo, id: Date.now(), zerado: false }])
+    setAnuncio(`Jogo "${novoJogo.titulo}" adicionado.`)
   }
 
   function alternarZerado(id) {
+    const jogo = jogos.find((j) => j.id === id)
+    const status = jogo.zerado ? "não zerado" : "zerado"
     setJogos((atual) =>
       atual.map((j) => (j.id === id ? { ...j, zerado: !j.zerado } : j))
     )
+    setAnuncio(`Jogo "${jogo.titulo}" marcado como ${status}.`)
   }
 
   function removerJogo(id) {
+    const jogo = jogos.find((j) => j.id === id)
     setJogos((atual) => atual.filter((j) => j.id !== id))
+    setAnuncio(`Jogo "${jogo.titulo}" removido.`)
   }
 
   const jogosFiltrados = jogos.filter((j) => {
@@ -54,20 +57,35 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-900">
+      {/* Skip link: só aparece quando recebe foco via Tab */}
+      <a
+        href="#conteudo"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-slate-900 focus:shadow-lg"
+      >
+        Pular para o conteúdo
+      </a>
+
       <Header />
-      <main className="mx-auto max-w-6xl px-4 py-8">
+
+      {/* Região anunciada pelo leitor de tela */}
+      <div aria-live="polite" role="status" className="sr-only">
+        {anuncio}
+      </div>
+
+      <main id="conteudo" className="mx-auto max-w-6xl px-4 py-8">
         <JogoForm onAdicionar={adicionarJogo} />
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-xl font-bold text-slate-200">
             Meus jogos ({jogosFiltrados.length})
           </h2>
-          <div className="flex gap-2">
+          <div role="group" aria-label="Filtrar jogos" className="flex gap-2">
             {FILTROS.map((opcao) => (
               <button
                 key={opcao.valor}
                 onClick={() => setFiltro(opcao.valor)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+                aria-pressed={filtro === opcao.valor}
+                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-violet-300 ${
                   filtro === opcao.valor
                     ? "bg-violet-600 text-white"
                     : "bg-slate-800 text-slate-300 hover:bg-slate-700"
@@ -100,6 +118,7 @@ export default function App() {
           ))}
         </div>
       </main>
+
       <Footer nome="GameDex" ano={2026} />
     </div>
   )
